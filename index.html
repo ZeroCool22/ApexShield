@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <style>html,body{background:#06090e;color:#d8e4f0}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <title>APEX SHIELD // Ofuscador JS de Grado Militar</title>
+  <meta name="description" content="Ofuscador de JavaScript de grado militar con AST Control Flow Flattening, Cifrado RC4, Anti-Tampering y Anti-Debugging." />
+  <!-- Google Fonts: Orbitron & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css" />
+  <script>window.process = window.process || { env: {} };</script>
+</head>
+<body class="apex-dark">
+  <!-- Background Cyber Matrix Canvas -->
+  <canvas id="cyberGridCanvas" class="cyber-bg"></canvas>
+
+  <div class="hud-container">
+    <!-- Header -->
+    <header class="hud-header">
+      <div class="brand">
+        <div class="brand-radar">
+          <div class="radar-sweep"></div>
+          <div class="radar-dot"></div>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">APEX<span class="text-cyan">SHIELD</span> <span class="badge-mil">MIL-SPEC 8.4</span></div>
+          <div class="brand-sub">TACTICAL JAVASCRIPT AST MUTATION & ARMORING SYSTEM</div>
+        </div>
+      </div>
+
+      <!-- Presets Selector -->
+      <div class="preset-selector">
+        <span class="preset-label">PROTOCOLOS:</span>
+        <div class="preset-group">
+          <button class="preset-btn" data-preset="tactical">TÁCTICO</button>
+          <button class="preset-btn" data-preset="armored">BLINDADO</button>
+          <button class="preset-btn active" data-preset="military">MILITAR</button>
+          <button class="preset-btn danger" data-preset="paranoid">CHERNOBYL</button>
+        </div>
+      </div>
+
+      <!-- Master Action -->
+      <div class="header-actions">
+        <button id="btnObfuscate" class="btn-primary-glow">
+          <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+          OFUSCAR CÓDIGO
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="hud-main">
+      <!-- Left: Source Editor -->
+      <section class="editor-panel panel-source">
+        <div class="panel-header">
+          <div class="panel-tag">
+            <span class="tag-status live"></span>
+            <span>CÓDIGO FUENTE (RAW INPUT)</span>
+          </div>
+          <div class="panel-tools">
+            <select id="sampleSelect" class="hud-select" title="Cargar plantilla de prueba">
+              <option value="">-- Muestras Tácticas --</option>
+              <option value="auth">Autenticación & Token HMAC</option>
+              <option value="game">Motor de Juego / Licensing</option>
+              <option value="crypto">Algoritmo de Cifrado AES/XOR</option>
+            </select>
+            <label class="hud-btn-file" title="Cargar archivo .js">
+              <span>SUBIR .JS</span>
+              <input type="file" id="fileInput" accept=".js,.mjs,.cjs,.ts" style="display: none;" />
+            </label>
+            <button id="btnClearSource" class="hud-btn-sm" title="Limpiar entrada">LIMPIAR</button>
+          </div>
+        </div>
+        <div class="editor-wrapper">
+          <textarea id="sourceEditor" spellcheck="false" placeholder="// Ingresa o arrastra tu código JavaScript aquí..."></textarea>
+        </div>
+        <div class="panel-footer">
+          <span id="sourceStats">0 Líneas | 0 Caracteres</span>
+        </div>
+      </section>
+
+      <!-- Center: Tactical Config Matrix (Accordion / HUD Toggles) -->
+      <aside class="control-panel">
+        <div class="panel-header">
+          <div class="panel-tag">
+            <svg class="tag-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+            <span>MATRIZ DE DEFENSA</span>
+          </div>
+        </div>
+
+        <div class="control-scroll">
+          <!-- Modulo 1: CFF -->
+          <div class="toggle-card">
+            <div class="toggle-card-header">
+              <label class="switch">
+                <input type="checkbox" id="chkCFF" checked>
+                <span class="slider"></span>
+              </label>
+              <div class="toggle-info">
+                <div class="toggle-title">Control Flow Flattening</div>
+                <div class="toggle-desc">Desarma la lógica en una máquina de estados con switch y bucle infinito.</div>
+              </div>
+            </div>
+            <div class="slider-row">
+              <span>Densidad CFF: <strong id="valCFF">80%</strong></span>
+              <input type="range" id="rngCFF" min="10" max="100" value="80" class="hud-range">
+            </div>
+          </div>
+
+          <!-- Modulo 2: Strings -->
+          <div class="toggle-card">
+            <div class="toggle-card-header">
+              <label class="switch">
+                <input type="checkbox" id="chkStrings" checked>
+                <span class="slider"></span>
+              </label>
+              <div class="toggle-info">
+                <div class="toggle-title">Cifrado RC4 de Strings</div>
+                <div class="toggle-desc">Extrae literales a tabla encriptada con rotador dinámico en tiempo de ejecución.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modulo 3: Mangling -->
+          <div class="toggle-card">
+            <div class="toggle-card-header">
+              <label class="switch">
+                <input type="checkbox" id="chkMangle" checked>
+                <span class="slider"></span>
+              </label>
+              <div class="toggle-info">
+                <div class="toggle-title">Mangling de Identificadores</div>
+                <div class="toggle-desc">Renombra variables, funciones y parámetros con análisis de scope.</div>
+              </div>
+            </div>
+            <div class="radio-row">
+              <label><input type="radio" name="mangleMode" value="hexadecimal" checked> Hex (_0x4f1a)</label>
+              <label><input type="radio" name="mangleMode" value="confusable"> Confuso (_0xIl1O)</label>
+            </div>
+          </div>
+
+          <!-- Modulo 4: Dead Code -->
+          <div class="toggle-card">
+            <div class="toggle-card-header">
+              <label class="switch">
+                <input type="checkbox" id="chkDeadCode" checked>
+                <span class="slider"></span>
+              </label>
+              <div class="toggle-info">
+                <div class="toggle-title">Código Muerto & Predicados</div>
+                <div class="toggle-desc">Inyecta ecuaciones opacas siempre verdaderas con ramas señuelo.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modulo 5: Literales & Props -->
+          <div class="toggle-card">
+            <div class="toggle-card-header">
+              <label class="switch">
+                <input type="checkbox" id="chkProps" checked>
+                <span class="slider"></span>
+              </label>
+              <div class="toggle-info">
+                <div class="toggle-title">Propiedades Calculadas</div>
+                <div class="toggle-desc">Transforma a.b en a['b'] para ocultar llamados de API.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modulo 6: Anti-Tamper -->
+          <div class="toggle-card border-danger">
+            <div class="toggle-card-header">
+              <label class="switch danger">
+                <input type="checkbox" id="chkSelfDef" checked>
+                <span class="slider"></span>
+              </label>
+              <div class="toggle-info">
+                <div class="toggle-title text-danger">Auto-Defensa Anti-Beautify</div>
+                <div class="toggle-desc">Crashea si el código es formateado con Prettier o DevTools.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modulo 7: Anti-Debug -->
+          <div class="toggle-card border-danger">
+            <div class="toggle-card-header">
+              <label class="switch danger">
+                <input type="checkbox" id="chkAntiDebug" checked>
+                <span class="slider"></span>
+              </label>
+              <div class="toggle-info">
+                <div class="toggle-title text-danger">Trampa Anti-Debugging</div>
+                <div class="toggle-desc">Bombardea con sentencias debugger si abren la consola del navegador.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modulo 8: Silenciador de Consola -->
+          <div class="toggle-card">
+            <div class="toggle-card-header">
+              <label class="switch">
+                <input type="checkbox" id="chkDisableConsole">
+                <span class="slider"></span>
+              </label>
+              <div class="toggle-info">
+                <div class="toggle-title">Silenciador de Consola</div>
+                <div class="toggle-desc">Anula console.log, warn y error para evitar rastreos dinámicos.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="control-footer">
+          <button id="btnGithub" class="github-button" type="button" title="github.com/ZeroCool22">
+            <img src="/github.svg" alt="" width="22" height="22" /> <span>By ZeroCool22</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Right: Obfuscated Output Panel -->
+      <section class="editor-panel panel-output">
+        <div class="panel-header">
+          <div class="panel-tag">
+            <span class="tag-status armored"></span>
+            <span>SALIDA BLINDADA (MIL-SPEC OBFUSCATED)</span>
+          </div>
+          <div class="panel-tools">
+            <button id="btnRunSandbox" class="hud-btn-action" title="Probar ejecución en Sandbox seguro">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+              </svg>
+              PROBAR EN SANDBOX
+            </button>
+            <button id="btnToggleWrap" class="hud-btn-sm" title="Alternar Ajuste de Línea / Word Wrap (Alt+Z)">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -2px; margin-right: 3px;">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <path d="M3 12h15a3 3 0 1 1 0 6h-4"></path>
+                <polyline points="16 16 14 18 16 20"></polyline>
+              </svg>
+              <span>WORD WRAP</span>
+            </button>
+            <button id="btnClearOutput" class="hud-btn-sm" title="Limpiar salida de código">LIMPIAR</button>
+            <button id="btnCopy" class="hud-btn-sm" title="Copiar al portapapeles">COPIAR</button>
+            <button id="btnDownload" class="hud-btn-sm" title="Descargar archivo .obf.js">DESCARGAR</button>
+          </div>
+        </div>
+        <div class="editor-wrapper">
+          <textarea id="outputEditor" readonly spellcheck="false" placeholder="// El código protegido aparecerá aquí..."></textarea>
+        </div>
+        <div class="panel-footer">
+          <div class="telemetry-bar">
+            <div class="telemetry-item">
+              <span class="lbl">TIEMPO:</span>
+              <span class="val text-cyan" id="statTime">0 ms</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="lbl">EXPANSIÓN:</span>
+              <span class="val text-amber" id="statRatio">0%</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="lbl">ENTROPÍA:</span>
+              <span class="val text-green" id="statEntropy">0.00 → 0.00 b/B</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="lbl">WRAP:</span>
+              <span class="val text-dim" id="statWrap">OFF</span>
+            </div>
+            <div class="telemetry-item">
+              <span class="lbl">ESTADO:</span>
+              <span class="val badge-ready" id="statStatus">LISTO</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Sandbox Terminal Drawer -->
+    <div id="sandboxDrawer" class="sandbox-drawer closed">
+      <div class="sandbox-header">
+        <div class="sandbox-title">
+          <span class="dot-terminal"></span>
+          <span>SANDBOX VIRTUAL DE PRUEBA DE EJECUCIÓN (VERIFICACIÓN EN TIEMPO REAL)</span>
+        </div>
+        <button id="btnCloseSandbox" class="btn-close-sandbox">&times;</button>
+      </div>
+      <div class="sandbox-console" id="sandboxConsole">
+        <div class="console-line system">// Sandbox iniciado en entorno aislado. Haz clic en 'PROBAR EN SANDBOX' para verificar la salida.</div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/bootstrap.js"></script>
+</body>
+</html>
