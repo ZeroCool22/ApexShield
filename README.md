@@ -117,7 +117,6 @@ ApexShield restaura el último autoguardado completo de entrada, salida y opcion
 
 En **Windows**, la recuperación nativa supervisa los fallos detectados de WebView2, limita los reintentos y puede activar un modo gráfico de compatibilidad. También podés usar **Interfaz → Recuperar interfaz** o **Ctrl+Shift+R**.
 
-Los detalles y el alcance de la recuperación están en [RECUPERACION.md](RECUPERACION.md).
 
 </details>
 
