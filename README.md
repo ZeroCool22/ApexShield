@@ -1,7 +1,7 @@
 <div align="center">
   <img src="src-tauri/icons/icon.png" width="150" alt="ApexShield" />
   <h1>ApexShield</h1>
-  <p><strong>Ofuscación de JavaScript con una interfaz táctica para Windows.</strong></p>
+  <p><strong>Ofuscación de JavaScript con una interfaz táctica para Windows & Linux.</strong></p>
   <p>Análisis AST · Cifrado de cadenas · Presets configurables · Recuperación automática</p>
   <p><a href="../../releases/latest">Descargar la última versión</a> · <a href="#desarrollo">Compilar desde el código fuente</a></p>
 </div>
@@ -10,7 +10,7 @@
 
 ApexShield transforma código JavaScript mediante análisis de su árbol de sintaxis abstracta (AST). Permite combinar renombrado de identificadores, ocultación de cadenas, transformaciones de literales, propiedades calculadas y aplanamiento del flujo de control desde una aplicación de escritorio.
 
-Desarrollado por **[ZeroCool22](https://github.com/ZeroCool22)** con **Tauri, Rust, JavaScript, Babel y Vite**.
+Desarrollado con **Tauri, Rust, JavaScript, Babel y Vite**.
 
 ## Descarga e instalación
 
@@ -21,6 +21,8 @@ Entrá a **[Releases](../../releases/latest)** y elegí una descarga:
 | `ApexShield_1.0.0_x64-setup.exe` | Instalador recomendado para Windows x64. |
 | `ApexShield_1.0.0_windows-x64_portable.zip` | Extraer y ejecutar `ApexShield.exe` sin instalar la aplicación. |
 | `ApexShield_1.0.0_x64_en-US.msi` | Instalador alternativo en formato MSI. |
+| `ApexShield_1.0.0_amd64.AppImage` | Ejecutar en Linux x64 sin una instalación tradicional. |
+| `ApexShield_1.0.0_amd64.deb` | Instalador para Debian, Ubuntu y distribuciones compatibles, en arquitectura x64. |
 | `SHA256SUMS.txt` | Sumas SHA-256 de los archivos publicados. |
 
 La aplicación utiliza **Microsoft Edge WebView2 Runtime**. El instalador está configurado para descargarlo si falta; la ejecución sin instalación requiere que ya esté disponible en el equipo. No necesitás Node.js ni Rust para usar los ejecutables. [Información de Tauri sobre WebView2](https://v2.tauri.app/distribute/windows-installer/#webview2-installation-options).
